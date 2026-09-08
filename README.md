@@ -157,13 +157,13 @@ ping -c 4 8.8.8.8
 ```
 Result: 4 packets received, 0% packet loss.
 
-![Connectivity Verification](screenshots/07-connectivity-%20verification.PNG)
-
 Tested DNS Resolution
 ```
 ping -c 4 google.com
 ping -c 4 networkwalks.com
 ```
+![Connectivity Verification](screenshots/07-connectivity-%20verification.PNG)
+
 Result: Both domains successfully resolved to an IPv4 addresses and returned 4 replies with 0% packet loss.
 
 These tests confirmed that the kali machine had:
@@ -224,3 +224,17 @@ This lab helped me understand that building a cybersecurity lab is not simply ab
 The cybersecurity lab was successfully configured and verified. Kali Linux was assigned the required IP address, connected through the private NAT Network, and successfully verified for gateway, Internet, and DNS connectivity.
 
 A clean snapshot was also created to provide a recovery point before beginning future Network Walks cybersecurity exercises.
+
+## Author
+
+Iwunze Queeneth C
+
+## Internship Instructor
+
+Waqas Karim CCIE
+
+## Project Information
+
+Program Name: Cybersecurity Internship at Networkwalks | Week 1 |
+Project: Cybersecurity Lab Setup |
+Repository: GitHub
