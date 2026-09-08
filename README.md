@@ -60,6 +60,8 @@ Oracle VirtualBox was installed on the Windows host system as the virtualization
 
 **Version used:** VirtualBox 7.2.10
 
+![VirtualBox Version](screenshots/01-virtualbox-version.PNG)
+
 ### 2. Install Kali Linux
 
 Kali Linux 2026.1 was installed as the primary cybersecurity testing machine.
@@ -68,6 +70,8 @@ The virtual machine was named:
 
 `kali 01`
 
+![Kali VM Setup](screenshots/02-kali-vm-setup.PNG)
+
 ### 3. Create the Private NAT Network
 
 A private NAT Network was created in VirtualBox with the following configuration:
@@ -75,6 +79,8 @@ A private NAT Network was created in VirtualBox with the following configuration
 - **Network Name:** `NatNetwork`
 - **IPv4 Prefix:** `10.0.0.0/24`
 - **DHCP:** Enabled
+
+![NAT Network Configuration](screenshots/03-nat-network-configured.PNG)
 
 The NAT Network provides controlled connectivity between virtual machines and external networks while keeping the lab environment isolated from the physical network.
 
@@ -90,6 +96,8 @@ The adapter was configured as:
 - **Promiscuous Mode:** Deny
 - **Cable Connected:** Enabled
 
+![Kali Network Adapter](screenshots/04-kali-network-adapter.PNG)
+
 ### 5. Configure Kali Static IP
 
 The Kali `eth0` interface was configured with a static IPv4 address using NetworkManager.
@@ -101,6 +109,8 @@ IP Address:  10.0.0.2/24
 Gateway:     10.0.0.1
 DNS:         8.8.8.8
 ```
+![Static IP Configuration](screenshots/05-static-ip-configuration.PNG)
+
 The NetworkManager connection was also configured with the required Duplicate Address Detection workaround for the Kali/VirtualBox environment:
 
 ```
@@ -112,6 +122,8 @@ The connection was then restarted:
 sudo nmcli connection down "Wired connection 1"
 sudo nmcli connection up "Wired connection 1"
 ```
+![Network Connection Configuration](screenshots/06-network-%20connection-configured.PNG)
+
 ## Lab Configuration:
 
 The final network configuration was:
@@ -145,6 +157,8 @@ ping -c 4 8.8.8.8
 ```
 Result: 4 packets received, 0% packet loss.
 
+![Connectivity Verification](screenshots/07-connectivity-%20verification.PNG)
+
 Tested DNS Resolution
 ```
 ping -c 4 google.com
@@ -157,3 +171,56 @@ These tests confirmed that the kali machine had:
 - Local gateway connectivity
 - Internet connectivity
 - Working DNS resolution
+
+## Clean Lab Snapshot
+
+After successfully completing and verifying the lab configuration, a clean VirtualBox snapshot was created to provide a recovery point before beginning future cybersecurity exercises.
+
+The snapshot was named:
+
+`Clean Lab Setup - NW Kali 2026.1`
+
+![Clean Lab Snapshot](screenshots/08-clean-lab-snapshot.png)
+
+## Challenges Encountered & Solutions
+
+### 1. NAT Network Subnet Mismatch
+
+The existing VirtualBox NAT Network configuration used a different subnet from the one required for the internship lab.
+
+**Solution:**  
+A dedicated `NatNetwork` was created and configured with the required `10.0.0.0/24` subnet. 
+
+### 2. Kali Did Not Initially Have the Required IPv4 Configuration
+
+After changing the VirtualBox network adapter to the new NAT Network, Kali did not initially have the required IPv4 address on `eth0`.
+
+**Solution:**  
+A static IP configuration was applied using NetworkManager with the following settings:
+
+```text
+IP Address: 10.0.0.2/24
+Gateway:    10.0.0.1
+DNS:        8.8.8.8
+```
+The connection was then restarted to apply the configuration.
+
+## Lessons Learned
+
+This lab helped me understand that building a cybersecurity lab is not simply about installing Kali Linux and security tools. Network configuration is a critical part of creating a reliable testing environment.
+
+## Some of the Key lessons learned include:
+
+- How VirtualBox NAT Networks provide controlled connectivity for virtual machines.
+- How to configure a Linux interface with a static IP using `nmcli`.
+- How IP addresses, gateways, DNS, and routing work together.
+- How to verify connectivity systematically using `ip route` and `ping`.
+- The importance of troubleshooting one network layer at a time.
+- The importance of documenting configurations and troubleshooting steps.
+- The value of creating a clean VM snapshot before beginning future security exercises.
+
+## Conclusion
+
+The cybersecurity lab was successfully configured and verified. Kali Linux was assigned the required IP address, connected through the private NAT Network, and successfully verified for gateway, Internet, and DNS connectivity.
+
+A clean snapshot was also created to provide a recovery point before beginning future Network Walks cybersecurity exercises.
